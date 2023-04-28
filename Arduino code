@@ -1,0 +1,73 @@
+// Voice Controlled Car Code v3
+String c;
+String voice;
+
+int inp1=12;
+int inp2=11;
+int inp3=10;
+int inp4=9;
+
+int enA = 4;
+int enB = 5;
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(inp1, OUTPUT);   //RIGHT MOTOR
+  pinMode(inp2, OUTPUT);   //RIGHT MOTOR
+  pinMode(inp3, OUTPUT);   //LEFT MOTOR
+  pinMode(inp4, OUTPUT);   //LEFT MOTOR
+
+  pinMode(enA, OUTPUT);   // Enable A
+  pinMode(enB, OUTPUT);   // Enable B
+  
+}
+void loop() 
+{  
+  analogWrite(enA, 180);
+  analogWrite(enB, 180);
+  
+  while(Serial.available()>0)
+  {
+    
+    Serial.println("inside while");
+    delay(10);
+    char c = Serial.read();
+    //Serial.println(c);
+
+    if(c=='#')
+    {
+      break;
+    }
+    voice+= String(c);
+    
+    Serial.println(voice);
+    }
+
+else
+    if(voice=="right"){
+    digitalWrite(inp1, LOW);
+    digitalWrite(inp2, HIGH);
+    digitalWrite(inp3, HIGH);
+    digitalWrite(inp4, LOW);
+    delay(100);
+  
+
+     
+    }
+    else
+    if(voice=="left"){
+    digitalWrite(inp1, HIGH);
+    digitalWrite(inp2, LOW);
+    digitalWrite(inp3, LOW);
+    digitalWrite(inp4, HIGH);
+    delay(100);   
+    }
+//Stop
+    digitalWrite(inp1, LOW);
+    digitalWrite(inp2, LOW);
+    digitalWrite(inp3, LOW);
+    digitalWrite(inp4, LOW);
+     //Stop
+    
+    voice = "";
+    }
